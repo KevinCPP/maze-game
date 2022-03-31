@@ -1,14 +1,17 @@
 #include "Button.h"
 
 Button::Button(const sf::Vector2f& position, const sf::Color& defaultClr, const sf::Color& altClr, const std::string& text, unsigned int fontSize) {
-    //initializing the sf::Text object
-    drawableText = sf::Text(text, *Engine::gpFont, fontSize);
-    drawableText.setFillColor(defaultColor);    
-
     //set other private variables
     selected = false;
     defaultColor = defaultClr;
     altColor = altClr;
+
+    //initializing the sf::Text object
+    drawableText = sf::Text(text, *Engine::gpFont, fontSize);
+    drawableText.setPosition(position);
+    drawableText.setFillColor(defaultColor);    
+    drawableText.setFont(*Engine::gpFont);        
+    drawableText.setCharacterSize(fontSize);    
 }
 
 sf::Vector2f Button::getPosition(){

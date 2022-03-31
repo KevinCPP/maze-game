@@ -4,14 +4,19 @@
 //SFML includes
 #include <SFML/Graphics.hpp>
 
+//standard includes
+#include <iostream>
+
+void testMenu();
+
 int main()
 {
-    //initialize global variables that we are going to use
-    Engine::Initialize();
-
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    
+    //initialize the engine
+    if(!Engine::Initialize()){
+        std::cout << "failed to initialize engine.\n";
+        return -1;
+    }
+   
     //main loop
     while (Engine::gpWindow->isOpen())
     {
@@ -23,16 +28,27 @@ int main()
                 Engine::gpWindow->close();
         }
 
-        //begin game's code
-        
-        
-        //end game's code
-
         Engine::gpWindow->clear();
-        Engine::gpWindow->draw(shape);
+        //begin rendering
+        
+        testMenu();
+        
+        //end rendering
         Engine::gpWindow->display();
     }
 
     return 0;
 }
 
+#include "Menu.h"
+
+void testMenu(){
+    Menu m(sf::Vector2f(20, Engine::yResolution/3), sf::Color::Black, sf::Color::White, sf::Color::Yellow, 32);
+
+    m.addButton("Play");
+    m.addButton("Options");
+    m.addButton("Information");
+    m.addButton("quit");
+    
+    m.draw();
+}
